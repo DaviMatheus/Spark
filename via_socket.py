@@ -27,7 +27,14 @@ words = lines.select(
  # Gerar contagem de palavras em execução
 wordCounts = words.groupBy("word").count()
 
+def foreach_batch_func(df, _):
+    total = df \
+        .groupBy() \
+        .sum() \
+        .select(lit('TOTAL').alias('key'), col('sum(count)').alias('value'))
 
+    df.write.format('console').save()
+    total.write.format('console').save()
 
  # Comece a executar a consulta que imprime as contagens em execução no console
 query = wordCounts \

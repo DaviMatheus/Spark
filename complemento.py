@@ -11,7 +11,7 @@ spark = SparkSession \
 stats = spark \
     .readStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", 'localhost:9090') \
+    .option("kafka.bootstrap.servers", 'localhost:9092') \
     .option("write", "topics") \
     .load()
 

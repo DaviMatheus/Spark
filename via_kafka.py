@@ -9,12 +9,12 @@ spark = SparkSession \
             .appName("KAFKA") \
             .getOrCreate()
             
-# #Criar DataFrame representando o fluxo de linhas de entrada da conexão para localhost:9090 e escrever os toppicos
+# #Criar DataFrame representando o fluxo de linhas de entrada da conexão para localhost:9092 e escrever os toppicos
 
 lines = spark \
     .readStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "localhost:9090") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
     .option("write", "contador_palavras") \
     .option('includeTimestamp', 'true') \
     .load()
@@ -80,7 +80,7 @@ qT = total \
     .writeStream \
     .outputMode("complete") \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "localhost:9090") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
     .option('topic', "topics") \
     .option('checkpointLocation', '/tmp/spark/total-stats') \
     .start()
@@ -89,7 +89,7 @@ qLen = lengths \
     .writeStream \
     .outputMode("update") \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "localhost:9090") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
     .option('topic', "topics") \
     .option('checkpointLocation', '/tmp/spark/len-stats') \
     .trigger(processingTime='3 seconds') \
@@ -99,7 +99,7 @@ qLet = letters \
     .writeStream \
     .outputMode("update") \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "localhost:9090") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
     .option('topic', "topics") \
     .option('checkpointLocation', '/tmp/spark/let-stats') \
     .trigger(processingTime='3 seconds') \
